@@ -1,0 +1,5 @@
+%let server="nllipidcs40423.nl.eu.abnamro.com"; 
+%let schema=<schema>;
+%let std   = %scan(&SYSUSERID,2,'\/');
+
+LIBNAME HIVEDB HADOOP PORT=10000 SERVER=&server SUBPROTOCOL=hive2 user=&std SCHEMA=&schema;
