@@ -1,0 +1,12 @@
+%let std   = %scan(&SYSUSERID,2,'\/');
+%let schema=dihps;
+%let server="nllipidcs40423.nl.eu.abnamro.com"; 
+
+proc sql ;
+ connect to hadoop (server=&server subprotocol=hive2 port=10000 schema="&schema" user="&std"); 
+ 
+ execute (drop table cars_to_hive) by hadoop;
+/* execute (drop database DIHPS) by hadoop;*/
+/* execute (create database if not exists DIHPS) by hadoop;*/
+ disconnect from hadoop;
+quit;
