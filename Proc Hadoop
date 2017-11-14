@@ -1,0 +1,5 @@
+%let std  = %scan(&SYSUSERID,2,'\/');
+%let stdpw=<secret>;
+proc hadoop username="&std" password="&stdpw" verbose;
+  hdfs copyfromlocal = "/data/sasnormal/edi_finance/<dir>/<file>" out= "/user/&std/<dir>/<file>.txt" overwrite;
+run;
