@@ -3,3 +3,15 @@
 %let std   = %scan(&SYSUSERID,2,'\/');
 
 LIBNAME HIVEDB HADOOP PORT=10000 SERVER=&server SUBPROTOCOL=hive2 user=&std SCHEMA=&schema;
+
+proc delete data=HIVEDB.cars_to_hive;quit;run;
+
+data HIVEDB.cars_to_hive;
+	set sashelp.cars;
+run;
+
+/* processing on HDFS */
+proc sql;
+	create table sample as
+		select make,model from HIVEDB.cars_to_hive;
+quit;
